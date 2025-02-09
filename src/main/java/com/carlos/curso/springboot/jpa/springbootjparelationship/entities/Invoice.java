@@ -4,11 +4,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table("invoices")
+@Table(name="invoices")
 public class Invoice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,6 +18,9 @@ public class Invoice {
     private String description;
 
     private Long total;
+
+    @ManyToOne
+    private Client client;
 
     public Invoice() {
     }
@@ -47,5 +52,15 @@ public class Invoice {
 
     public void setTotal(Long total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", total=" + total +
+                ", client=" + client +
+                '}';
     }
 }
