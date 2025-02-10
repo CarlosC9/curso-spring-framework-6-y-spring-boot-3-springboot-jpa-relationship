@@ -23,7 +23,7 @@ public class Client {
 
   private String lastname;
 
-  @OneToMany(mappedBy = "addresses",cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "client",cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Address> addresses = new ArrayList<>();
 
   public Client() {
