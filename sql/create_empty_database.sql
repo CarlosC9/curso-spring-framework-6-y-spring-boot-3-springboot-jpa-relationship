@@ -20,5 +20,5 @@ CREATE TABLE invoices
 );
 
 ALTER TABLE invoices
-    ADD column client bigint,
-    ADD FOREIGN KEY (client) REFERENCES clients (id) ON DELETE SET NULL;
+    ADD column client_id bigint not null,
+    ADD FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE;
