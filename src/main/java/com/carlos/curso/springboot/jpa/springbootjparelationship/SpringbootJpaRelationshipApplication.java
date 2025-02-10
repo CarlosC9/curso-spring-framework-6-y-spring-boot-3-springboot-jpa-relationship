@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -65,11 +66,31 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
     this.clientRepository.save(client);
   }
 
+  @Transactional
+  public void oneToManyFindById() {
+    Optional<Client> optionalClient = this.clientRepository.findById(2L);
+
+    if (optionalClient.isPresent()) {
+      Client client = optionalClient.orElseThrow();
+
+      Address address1 = new Address("El verjel", 1234);
+      Address address2 = new Address("Vasxo de Gama", 9875);
+
+      address1.setClient(client);
+      address2.setClient(client);
+
+      client.setAddresses(Arrays.asList(address1, address2));
+
+      this.clientRepository.save(client);
+    }
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
 //    this.manyToOneFindById();
-    this.oneToMany();
+//    this.oneToMany();
+    this.oneToManyFindById();
   }
 
   @Autowired
