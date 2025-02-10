@@ -85,12 +85,29 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
     }
   }
 
+  @Transactional
+  public void removeAddress() {
+    Optional<Client> optionalClient = this.clientRepository.findById(4L);
+
+    if (optionalClient.isPresent()) {
+      Client client = optionalClient.orElseThrow();
+
+      if (!client.getAddresses().isEmpty()) {
+        client.getAddresses().remove(0);
+        this.clientRepository.save(client);
+      }
+
+    }
+
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
 //    this.manyToOneFindById();
 //    this.oneToMany();
-    this.oneToManyFindById();
+//    this.oneToManyFindById();
+    this.removeAddress();
   }
 
   @Autowired
