@@ -51,7 +51,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
-    this.manyToOneFindById();
+//    this.manyToOneFindById();
   }
 
   @Autowired
