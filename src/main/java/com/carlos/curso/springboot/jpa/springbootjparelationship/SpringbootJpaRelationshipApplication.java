@@ -178,6 +178,16 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
     }
   }
 
+  public void removeOneToOneClientDetails() {
+    Optional<Client> optionalClient = this.clientRepository.findById(2L);
+
+    if (optionalClient.isPresent()) {
+      Client client = optionalClient.orElseThrow();
+      client.setClientDetails(null);
+      this.clientRepository.save(client);
+    }
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
@@ -189,6 +199,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 //    this.removeInvoiceBidireccional();
 //    this.oneToOne();
 //    this.oneToOneBidireccional();
+    this.removeOneToOneClientDetails();
   }
 
   @Autowired
