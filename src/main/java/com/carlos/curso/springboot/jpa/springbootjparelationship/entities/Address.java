@@ -8,6 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name="addresses")
 public class Address {
@@ -72,5 +74,16 @@ public class Address {
       ", number=" + this.number +
       ", clientName=" + this.number +
       '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Address address)) return false;
+    return Objects.equals(id, address.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
   }
 }
