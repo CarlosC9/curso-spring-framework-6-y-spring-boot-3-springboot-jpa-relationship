@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.util.ArrayList;
@@ -39,6 +40,14 @@ public class Client {
     fetch = FetchType.EAGER
   )
   private List<Invoice> invoices = new ArrayList<>();
+
+  @OneToOne(
+    mappedBy = "client",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true,
+    fetch = FetchType.EAGER
+  )
+  private ClientDetails clientDetails;
 
   public Client() {
   }
@@ -86,6 +95,14 @@ public class Client {
 
   public void setAddresses(List<Address> addresses) {
     this.addresses = addresses;
+  }
+
+  public ClientDetails getClientDetails() {
+    return clientDetails;
+  }
+
+  public void setClientDetails(ClientDetails clientDetails) {
+    this.clientDetails = clientDetails;
   }
 
   public Client addInvoice(Invoice invoice) {

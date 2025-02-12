@@ -27,10 +27,22 @@ CREATE TABLE addresses
   primary key (id)
 );
 
+CREATE TABLE client_details
+(
+  id      bigint not null auto_increment,
+  points  int,
+  premium boolean,
+  primary key (id)
+);
+
 ALTER TABLE invoices
   ADD column client_id bigint not null,
   ADD FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE;
 
 ALTER TABLE addresses
+  ADD COLUMN client_id bigint not null,
+  ADD FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE;
+
+ALTER TABLE client_details
   ADD COLUMN client_id bigint not null,
   ADD FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE;
