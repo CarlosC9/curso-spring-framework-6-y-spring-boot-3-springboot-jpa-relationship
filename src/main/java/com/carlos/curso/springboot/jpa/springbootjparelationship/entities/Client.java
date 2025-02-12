@@ -32,6 +32,14 @@ public class Client {
   )
   private List<Address> addresses = new ArrayList<>();
 
+  @OneToMany(
+    mappedBy = "client",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true,
+    fetch = FetchType.EAGER
+  )
+  private List<Invoice> invoices;
+
   public Client() {
   }
 
