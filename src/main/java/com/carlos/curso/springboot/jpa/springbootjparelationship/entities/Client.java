@@ -88,6 +88,12 @@ public class Client {
     this.addresses = addresses;
   }
 
+  public Client addInvoice(Invoice invoice) {
+    this.invoices.add(invoice);
+    invoice.setClient(this);
+    return this;
+  }
+
   @Override
   public String toString() {
     return "Client{" +
