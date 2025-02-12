@@ -60,15 +60,12 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
     address1.setClient(client);
     address2.setClient(client);
 
-    client.getAddresses().add(address1);
-    client.getAddresses().add(address2);
-
     this.clientRepository.save(client);
   }
 
   @Transactional
   public void oneToManyFindById() {
-    Optional<Client> optionalClient = this.clientRepository.findById(2L);
+    Optional<Client> optionalClient = this.clientRepository.findById(4L);
 
     if (optionalClient.isPresent()) {
       Client client = optionalClient.orElseThrow();
@@ -79,7 +76,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
       address1.setClient(client);
       address2.setClient(client);
 
-      client.setAddresses(Arrays.asList(address1, address2));
+      client.getAddresses().add(address1);
+      client.getAddresses().add(address2);
 
       this.clientRepository.save(client);
     }

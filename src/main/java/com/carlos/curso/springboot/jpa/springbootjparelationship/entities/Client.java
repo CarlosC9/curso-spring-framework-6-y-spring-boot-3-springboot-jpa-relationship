@@ -2,6 +2,7 @@ package com.carlos.curso.springboot.jpa.springbootjparelationship.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +24,12 @@ public class Client {
 
   private String lastname;
 
-  @OneToMany(mappedBy = "client",cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(
+    mappedBy = "client",
+    cascade = CascadeType.ALL,
+    orphanRemoval = true,
+    fetch = FetchType.EAGER
+  )
   private List<Address> addresses = new ArrayList<>();
 
   public Client() {

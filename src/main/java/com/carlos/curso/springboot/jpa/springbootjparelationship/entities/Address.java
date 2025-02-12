@@ -75,15 +75,4 @@ public class Address {
       ", clientName=" + this.number +
       '}';
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof Address address)) return false;
-    return Objects.equals(id, address.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hashCode(id);
-  }
 }
