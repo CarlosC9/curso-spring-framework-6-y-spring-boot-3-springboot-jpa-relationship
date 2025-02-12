@@ -117,8 +117,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   @Transactional
   public void oneToManyInvoiceBidireccionalFindById() {
 
-
-    Optional<Client> optionalClient = this.clientRepository.findById(8L);
+    Optional<Client> optionalClient = this.clientRepository.findById(2L);
 
     if (optionalClient.isPresent()) {
       Client client = optionalClient.orElseThrow();
@@ -135,6 +134,20 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
   }
 
+  @Transactional
+  public void removeInvoiceBidireccional() {
+    Optional<Client> optionalClient = this.clientRepository.findById(2L);
+
+    if (optionalClient.isPresent()) {
+      Client client = optionalClient.orElseThrow();
+
+      if (!client.getInvoices().isEmpty()) {
+        client.getInvoices().remove(0);
+        this.clientRepository.save(client);
+      }
+    }
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
@@ -143,7 +156,7 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 //    this.oneToManyFindById();
 //    this.removeAddress();
 //    this.oneToManyInvoiceBidireccional();
-    this.oneToManyInvoiceBidireccionalFindById();
+    this.removeInvoiceBidireccional();
   }
 
   @Autowired
