@@ -38,7 +38,7 @@ public class Client {
     orphanRemoval = true,
     fetch = FetchType.EAGER
   )
-  private List<Invoice> invoices;
+  private List<Invoice> invoices = new ArrayList<>();
 
   public Client() {
   }
@@ -74,6 +74,14 @@ public class Client {
 
   public List<Address> getAddresses() {
     return addresses;
+  }
+
+  public List<Invoice> getInvoices() {
+    return invoices;
+  }
+
+  public void setInvoices(List<Invoice> invoices) {
+    this.invoices = invoices;
   }
 
   public void setAddresses(List<Address> addresses) {
