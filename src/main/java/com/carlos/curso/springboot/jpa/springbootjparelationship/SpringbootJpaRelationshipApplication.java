@@ -8,6 +8,7 @@ import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Invoic
 import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Student;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.ClientDetailsRepository;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.ClientRepository;
+import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.CourseRepository;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.InvoiceRepository;
 
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.StudentRepository;
@@ -30,6 +31,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   private ClientDetailsRepository clientDetailsRepository;
 
   private StudentRepository studentRepository;
+
+  private CourseRepository courseRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(SpringbootJpaRelationshipApplication.class, args);
@@ -208,6 +211,22 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
   }
 
+  @Transactional
+  public void manyToManyFindById() {
+    Optional<Student> optionalStudent = this.studentRepository.findById(8L);
+    Optional<Course> optionalCourse = this.courseRepository.findById(1L);
+
+    if (optionalCourse.isPresent() && optionalStudent.isPresent()) {
+      Student student = optionalStudent.orElseThrow();
+      Course course = optionalCourse.orElseThrow();
+
+      student.addCourse(course);
+
+      this.studentRepository.save(student);
+    }
+
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
@@ -220,7 +239,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 //    this.oneToOne();
 //    this.oneToOneBidireccional();
 //    this.removeOneToOneClientDetails();
-    this.manyToMany();
+//    this.manyToMany();
+    this.manyToManyFindById();
   }
 
   @Autowired
@@ -241,5 +261,10 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
     this.studentRepository = studentRepository;
+  }
+
+  @Autowired
+  public void setCourseRepository(CourseRepository courseRepository) {
+    this.courseRepository = courseRepository;
   }
 }

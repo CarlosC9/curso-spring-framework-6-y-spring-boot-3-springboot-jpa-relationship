@@ -23,7 +23,7 @@ public class Course {
 
   private String instructor;
 
-  @ManyToMany()
+  @ManyToMany(mappedBy = "courses")
   private List<Student> students = new ArrayList<>();
 
   public Course() {

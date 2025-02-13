@@ -2,6 +2,7 @@ package com.carlos.curso.springboot.jpa.springbootjparelationship.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,7 +28,7 @@ public class Student {
 
   private String lastname;
 
-  @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+  @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
   @JoinTable(
     name = "students_courses",
     joinColumns = @JoinColumn(name = "student_id"),
