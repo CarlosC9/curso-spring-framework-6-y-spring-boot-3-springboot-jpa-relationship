@@ -227,6 +227,26 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 
   }
 
+  @Transactional
+  public void manyToManyRemove() {
+    Optional<Student> optionalStudent = this.studentRepository.findById(8L);
+
+    if (optionalStudent.isPresent()) {
+      Student student = optionalStudent.orElseThrow();
+
+      Optional<Course> optionalCourse = student.getCourses().stream()
+        .filter(item -> item.getId().equals(2L))
+        .findFirst();
+
+      if (optionalCourse.isPresent()) {
+        student.getCourses().remove(optionalCourse.orElseThrow());
+      }
+
+      this.studentRepository.save(student);
+    }
+
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
@@ -240,7 +260,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 //    this.oneToOneBidireccional();
 //    this.removeOneToOneClientDetails();
 //    this.manyToMany();
-    this.manyToManyFindById();
+//    this.manyToManyFindById();
+    this.manyToManyRemove();
   }
 
   @Autowired
