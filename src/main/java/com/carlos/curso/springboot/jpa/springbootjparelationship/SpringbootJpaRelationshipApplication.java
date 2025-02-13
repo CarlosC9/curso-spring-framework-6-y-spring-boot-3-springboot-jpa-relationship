@@ -3,11 +3,14 @@ package com.carlos.curso.springboot.jpa.springbootjparelationship;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Address;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Client;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.ClientDetails;
+import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Course;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Invoice;
+import com.carlos.curso.springboot.jpa.springbootjparelationship.entities.Student;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.ClientDetailsRepository;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.ClientRepository;
 import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.InvoiceRepository;
 
+import com.carlos.curso.springboot.jpa.springbootjparelationship.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +28,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   private InvoiceRepository invoiceRepository;
 
   private ClientDetailsRepository clientDetailsRepository;
+
+  private StudentRepository studentRepository;
 
   public static void main(String[] args) {
     SpringApplication.run(SpringbootJpaRelationshipApplication.class, args);
@@ -188,6 +193,21 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
     }
   }
 
+  @Transactional
+  public void manyToMany() {
+    Student student1 = new Student("Jano", "Pura");
+    Student student2 = new Student("Erba", "Doe");
+
+    Course course1 = new Course("Curso de java master", "Andres");
+    Course course2 = new Course("Curso de Spring boot", "Andres");
+
+    student1.addCourse(course1).addCourse(course2);
+    student2.addCourse(course2);
+
+    this.studentRepository.saveAll(Arrays.asList(student1, student2));
+
+  }
+
   @Override
   public void run(String... args) throws Exception {
 //        this.manyToOne();
@@ -199,7 +219,8 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
 //    this.removeInvoiceBidireccional();
 //    this.oneToOne();
 //    this.oneToOneBidireccional();
-    this.removeOneToOneClientDetails();
+//    this.removeOneToOneClientDetails();
+    this.manyToMany();
   }
 
   @Autowired
@@ -215,5 +236,10 @@ public class SpringbootJpaRelationshipApplication implements CommandLineRunner {
   @Autowired
   public void setClientDetailsRepository(ClientDetailsRepository clientDetailsRepository) {
     this.clientDetailsRepository = clientDetailsRepository;
+  }
+
+  @Autowired
+  public void setStudentRepository(StudentRepository studentRepository) {
+    this.studentRepository = studentRepository;
   }
 }

@@ -35,6 +35,31 @@ CREATE TABLE client_details
   primary key (id)
 );
 
+CREATE TABLE students
+(
+  id       bigint not null auto_increment,
+  name     varchar(255),
+  lastname varchar(255),
+  primary key (id)
+);
+
+CREATE TABLE courses
+(
+  id       bigint not null auto_increment,
+  name     varchar(255),
+  instructor varchar(255),
+  primary key (id)
+);
+
+CREATE TABLE students_courses
+(
+  course_id bigint not null,
+  student_id bigint not null,
+  primary key (course_id, student_id),
+  foreign key (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+  foreign key (student_id) REFERENCES students(id) ON DELETE CASCADE
+);
+
 ALTER TABLE invoices
   ADD column client_id bigint not null,
   ADD FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE;
